@@ -38,5 +38,24 @@ for(p in 1:12){
 
 ExperienceRisk_Sessions <-
 ExperienceRisk_Sessions %>% mutate(sum_correct_payoffs_first = sum_correct_payoffs_first, 
-                                    sum_correct_payoffs_second = sum_correct_payoffs_second)
+                                  sum_correct_payoffs_second = sum_correct_payoffs_second,
+                                  simple_diff = Gamble.2 - Gamble.1)
+
+
+# Regression ----
+
+lm(ExperienceRisk_Sessions$simple_diff ~ ExperienceRisk_Sessions$CR.Payoff)
+
+lm(ExperienceRisk_Sessions$simple_diff ~ ExperienceRisk_Sessions$CR.Payoff+
+     ExperienceRisk_Sessions$numE_freechoice)
+
+lm(ExperienceRisk_Sessions$simple_diff ~ ExperienceRisk_Sessions$CR.Payoff+
+     ExperienceRisk_Sessions$numE_preselected)
+
+lm(ExperienceRisk_Sessions$simple_diff ~ 
+     ExperienceRisk_Sessions$CR.Payoff+
+   ExperienceRisk_Sessions$sum_correct_payoffs_first+
+   ExperienceRisk_Sessions$sum_correct_payoffs_second)
+
+
 
