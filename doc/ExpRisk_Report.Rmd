@@ -1,0 +1,22 @@
+---
+title: 'Experience on Elicited Risk: Hypothesis and Data Analysis'
+author: "Dario Trujano-Ochoa and Nir Chemaya"
+date: "3/22/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data description
+
+In this study, the Eckle and Grossman risk elicitation task was implemented before and after the participants experience 24 realizations of the tasks. These correspond with **Gamble.1** and **Gamble.2** variables. 
+This dataset contains the result from 6 experimental sessions. 
+
+```{r}
+load('../data/ExperienceRisk_Sessions.RData')
+head(ExperienceRisk_Sessions)
+```
+
+#
