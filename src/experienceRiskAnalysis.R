@@ -12,7 +12,8 @@ p_load(matrixStats)
 
 ExperienceRisk_Sessions <- read.csv("Data/ExperienceRisk_Sessions.csv")
 Payoffs <- read.csv("Data/Payoffs.csv")
-Payoffs <- Payoffs %>% mutate(Gamble = ï..Gamble)
+Payoffs <- Payoffs %>% mutate(Gamble = ï..Gamble,
+                              Exp_payoff = (A+B)/2)
 
 ## number of mistakes
 
@@ -46,7 +47,10 @@ ExperienceRisk_Sessions <-
 ExperienceRisk_Sessions %>% mutate(sum_correct_payoffs_first = sum_correct_payoffs_first, 
                                   sum_correct_payoffs_second = sum_correct_payoffs_second,
                                   simple_diff = Gamble.2 - Gamble.1,
-                                  Session = ï..Session)
+                                  Session = ï..Session,
+                                  sum_correct_payoffs = sum_correct_payoffs_second+sum_correct_payoffs_first,
+                                  numE_all = numE_preselected+numE_freechoice,
+                                  Exp_Payoffs= Payoffs$Exp_payoff[match(Gamble.1,Payoffs$Gamble)])
 
 # Are people exploring?
 ExperienceRisk_Sessions <- 
@@ -77,9 +81,13 @@ m1 <- lm(simple_diff ~ CR.Payoff+
 summary(m1)
 
 m2 <- lm(simple_diff ~ 
-   CR.Payoff+
-   sum_correct_payoffs_second+
-     explore,
+           Gamble.1 +
+           Gender+
+   CR.Payoff +
+     sum_correct_payoffs+
+     numE_all+
+     explore+
+     Session,
    data = ExperienceRisk_Sessions)
 summary(m2)
 
@@ -89,9 +97,19 @@ table(ExperienceRisk_Sessions$Gamble.1,ExperienceRisk_Sessions$Gamble.2,Experien
 
 # some exploratory graphs ----
 
+# ## transparency plot
+# ggplot(data = ExperienceRisk_Sessions ) + 
+#   geom_bar(aes(x = Gamble.1),fill = "red", alpha = 0.2) + 
+#   geom_bar(aes(x = Gamble.2),fill = "blue", alpha = 0.2)
+
+ggplot(data = ExperienceRisk_Sessions %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = Gamble,fill = Gamble_Order),position="dodge")
+
+
 ggplot(data = ExperienceRisk_Sessions) + 
-  geom_bar(aes(x = Gamble.1),fill = "red", alpha = 0.2) + 
-  geom_bar(aes(x = Gamble.2),fill = "blue", alpha = 0.2) 
+  geom_bar(aes(x=simple_diff, fill=factor(Gender)), alpha = 0.2)
 
 ggplot(data = ExperienceRisk_Sessions) + 
   geom_point(aes(x=Gamble.1,y=simple_diff, color=factor(CR.Payoff)), alpha = 0.2)
