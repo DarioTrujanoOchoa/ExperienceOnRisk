@@ -1,8 +1,8 @@
-### Effect of experience on alicited risk
+### Effect of experience on elicited risk
 ### Dario Trujano-Ochoa
-
 rm(list = ls())
 
+# Packages ----
 library(pacman)
 p_load(tidyverse)
 p_load(matrixStats)
