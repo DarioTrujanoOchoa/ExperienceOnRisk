@@ -70,8 +70,30 @@ ggplot(data = ExperienceRisk_Sessions %>%
          select(Gamble.1,Gamble.2) %>% 
          gather("Gamble_Order","Gamble") ) + 
   geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
-  xlab("Gamble Number")
+  labs(x = "Gamble Number", fill = "Gamble Order")
 ```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_bar(aes(x = factor(Gamble.1),fill = factor(sign_gamble)),position="dodge")+
+  labs(x = "Gamble Number",fill= "Directional \nChange of \nGamble")
+```
+
+The Wilcox test shows that the difference is significant at 5% when analyzing the hypothesis that Gamble 2 is greater. 
+```{r}
+wilcox.test(x = ExperienceRisk_Sessions$simple_diff,alternative = "greater")
+
+data1 <-
+ExperienceRisk_Sessions %>% 
+  mutate(ID= 1:99) %>% 
+    select(Gamble.1,Gamble.2,ID) %>% 
+    gather("Gamble_Order","Gamble") 
+
+friedman.test(y = data1$Gamble,groups = data1$Gamble_Order)
+pairwise.wilcox.test(x = data1$Gamble,g = data1$Gamble_Order,p.adjust.method = "bonf")
+
+```
+
 
 
 ```{r}
