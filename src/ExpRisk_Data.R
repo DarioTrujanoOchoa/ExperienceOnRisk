@@ -47,23 +47,32 @@ for(p in 1:12){
 
 # add sum of correct responses and create new useful data
 ExperienceRisk_Sessions <-
-ExperienceRisk_Sessions %>% mutate(sum_correct_payoffs_first = sum_correct_payoffs_first, 
-                                  sum_correct_payoffs_second = sum_correct_payoffs_second,
-                                  simple_diff = Gamble.2 - Gamble.1,
-                                  #Session = ï..Session, # problem in windows
-                                  sum_correct_payoffs = sum_correct_payoffs_second+sum_correct_payoffs_first,
-                                  # number of even events
-                                  numEven_all = numE_preselected+numE_freechoice,
-                                  Exp_Payoffs = Payoffs$Exp_payoff[match(Gamble.1,Payoffs$Gamble)])
-
-# Are people exploring?
-ExperienceRisk_Sessions <- 
 ExperienceRisk_Sessions %>% 
-  mutate(Free_choice_var = rowVars(as.matrix(select(.data = ExperienceRisk_Sessions,F1:F12)),na.rm = T)) %>% 
-  mutate(explore = Free_choice_var!=0)
-# consider selecting always the same choice in the free choice subsection as no exploration
+  mutate(
+    sum_correct_payoffs_first = sum_correct_payoffs_first, 
+    sum_correct_payoffs_second = sum_correct_payoffs_second,
+    simple_diff = Gamble.2 - Gamble.1,
+    #Session = ï..Session, # problem in windows
+    sum_correct_payoffs = sum_correct_payoffs_second+sum_correct_payoffs_first,
+    # number of even events
+    numEven_all = numE_preselected+numE_freechoice,
+    Exp_Payoffs_G1 = Payoffs$Exp_payoff[match(Gamble.1,Payoffs$Gamble)],
+    Exp_Payoffs_G2 = Payoffs$Exp_payoff[match(Gamble.2,Payoffs$Gamble)],
+    sign_gamble = sign(simple_diff),
+    # Are people exploring?
+    Free_choice_var = rowVars(as.matrix(select(.data = ExperienceRisk_Sessions,F1:F12)),na.rm = T)
+    ) %>% 
+  mutate(
+    sign_exp_payoff = sign(Exp_Payoffs_G2-Exp_Payoffs_G1),
+    # consider selecting always the same choice in the free choice subsection as no exploration
+    explore = Free_choice_var!=0
+    )
+
 sum(ExperienceRisk_Sessions$explore)
 # 83 people out of 99 explore
+
+# #To check data 
+# View(ExperienceRisk_Sessions %>% select(-starts_with(c("F","R","E","P"))))
 
 # export data 
 save(ExperienceRisk_Sessions,file = 'data/ExperienceRisk_Sessions.RData')

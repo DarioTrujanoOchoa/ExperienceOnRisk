@@ -12,6 +12,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(pacman)
 p_load(tidyverse)
+p_load(janitor)
 p_load(xtable)
 ```
 
@@ -41,15 +42,17 @@ Averges_per_Session <-
             Explore = mean(explore)
             )
 ```
+
 ```{r,results='asis', echo=FALSE}
 print(xtable(Averges_per_Session), include.rownames=FALSE, comment = FALSE)
 ```
 
 
 ## Risk elicited
-In this study, the Eckle and Grossman risk elicitation task was implemented before and after the participants experience 24 realizations of the tasks. These correspond with **Gamble.1** and **Gamble.2** variables. The next table show the 6 gambles presented to the participants; events **odd** and **even** are equally probable and they had to choose only one gamble. 
 
-![Payoff table of the gambles as presented to the participants.](Potential payments.jpg)
+In this study, the Eckle and Grossman risk elicitation task was implemented before and after the participants experience 24 realizations of the tasks. These correspond with **Gamble.1** and **Gamble.2** variables. Next table show the 6 gambles presented to the participants; events **odd** and **even** are equally probable and they had to choose only one gamble. 
+
+![Payoff table of the gambles as presented to the participants.](Potential payments.jpg){#fig:payoffs}
 
 Notice the expected payoff is increasing from Gamble 1 to 5, and then it decreases to 34 (the same as gamble 4), but in this case choosing gamble 6 clearly elicits risk loving preferences.
 
@@ -60,5 +63,19 @@ In the first 12, a gamble was pre-selected (variables **R1** to **R12**) and the
 In the last 12, a gamble was chosen by the participants (variables **F1** to **F12**) and the participants throw two dice to determine the events (variables **EF1** to **EF12**) and wrote down the corresponding payoff (variables **PF1** to **PF12**).
 The 24 periods of realizations didn't affected the final payoff, but one of them (**Period.to.review**) was selected to check if they wrote down the correct payoff and then earned an extra dollar (**Correct.Payoff**).
 
+# Hypothesis 1: Participants display larger levels of risk tolerance
 
-#
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+  xlab("Gamble Number")
+```
+
+
+```{r}
+ExperienceRisk_Sessions %>% tabyl(Gamble.1,Gamble.2)
+```
+
+
