@@ -63,7 +63,11 @@ In the first 12, a gamble was pre-selected (variables **R1** to **R12**) and the
 In the last 12, a gamble was chosen by the participants (variables **F1** to **F12**) and the participants throw two dice to determine the events (variables **EF1** to **EF12**) and wrote down the corresponding payoff (variables **PF1** to **PF12**).
 The 24 periods of realizations didn't affected the final payoff, but one of them (**Period.to.review**) was selected to check if they wrote down the correct payoff and then earned an extra dollar (**Correct.Payoff**).
 
-# Hypothesis 1: Participants display larger levels of risk tolerance
+# Hypothesis 
+
+## Participants display larger levels of risk tolerance
+
+### G2 - G1
 
 ```{r,echo=FALSE}
 ggplot(data = ExperienceRisk_Sessions %>% 
@@ -72,6 +76,8 @@ ggplot(data = ExperienceRisk_Sessions %>%
   geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
   labs(x = "Gamble Number", fill = "Gamble Order")
 ```
+
+The direction of the change is driven mostly by people choosing gamble 3 at the beginning and moving upwards.
 
 ```{r,echo=FALSE}
 ggplot(data = ExperienceRisk_Sessions) + 
@@ -82,22 +88,97 @@ ggplot(data = ExperienceRisk_Sessions) +
 The Wilcox test shows that the difference is significant at 5% when analyzing the hypothesis that Gamble 2 is greater. 
 ```{r}
 wilcox.test(x = ExperienceRisk_Sessions$simple_diff,alternative = "greater")
-
-data1 <-
-ExperienceRisk_Sessions %>% 
-  mutate(ID= 1:99) %>% 
-    select(Gamble.1,Gamble.2,ID) %>% 
-    gather("Gamble_Order","Gamble") 
-
-friedman.test(y = data1$Gamble,groups = data1$Gamble_Order)
-pairwise.wilcox.test(x = data1$Gamble,g = data1$Gamble_Order,p.adjust.method = "bonf")
-
 ```
 
+### EP 1 - EP2
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         select(Exp_Payoffs_G1,Exp_Payoffs_G2) %>% 
+         gather("Gamble_EP","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_EP),position="dodge")+
+  labs(x = "Gamble's Expected Payoff", fill = "Gamble \nExpected \nPayoff")
+```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_bar(aes(x = factor(Exp_Payoffs_G1),fill = factor(sign_exp_payoff)),position="dodge")+
+  labs(x = "Gamble 1's Expected Payoff",fill= "Directional \nChange of \nGamble")
+```
+
+The Wilcox test shows that the difference is significant at 10% when analyzing the hypothesis that Gamble 2 is greater. 
+```{r}
+wilcox.test(x = ExperienceRisk_Sessions$diff_Exp_Payoffs,alternative = "greater")
+```
 
 
 ```{r}
 ExperienceRisk_Sessions %>% tabyl(Gamble.1,Gamble.2)
 ```
 
+## Larger number of Even events will make people changing downwards
 
+### Gamble 1 - Gamble 2
+```{r}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_point(aes(x=numEven_all,y=simple_diff))
+```
+
+
+```{r}
+m1 <- lm(simple_diff ~ 
+           numEven_all,
+         data = ExperienceRisk_Sessions)
+summary(m1)
+```
+
+There is no significant effect of the overall number of events on the difference between Gamble 1 and 2.
+
+### Excpected Payoff 1 - Expected Payoff 2
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_point(aes(y=diff_Exp_Payoffs,x=numEven_all))
+```
+
+
+```{r,echo=FALSE}
+m1 <- lm(diff_Exp_Payoffs ~ 
+           numEven_all,
+         data = ExperienceRisk_Sessions)
+summary(m1)
+```
+
+There is no significant effect of the overall number of events on the difference between Expected Payoffs in Gamble 1 and 2.
+
+## CR predicting more changes
+
+```{r}
+ExperienceRisk_Sessions %>% 
+  mutate(G1 = factor(Gamble.1),
+         CRT = factor(CR.Payoff)) %>% 
+  tabyl(G1,CRT)
+```
+
+### G2 - G1
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_bar(aes(x = factor(Gamble.1),fill = factor(CR.Payoff)),position="dodge")+
+  labs(x = "Gamble 1",fill= "CRT \nScore")
+```
+
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_boxplot(aes(y=simple_diff,x=factor(CR.Payoff)))
+```
+
+
+```{r,echo=FALSE}
+m1 <- lm(simple_diff ~ 
+           CR.Payoff>0,
+         data = ExperienceRisk_Sessions)
+summary(m1)
+```
+
+There is an effect of the CR when considering a dummy for having achieved at least one point in the test. If people got at least one point, they will increase by one the number of the gamble they chose.

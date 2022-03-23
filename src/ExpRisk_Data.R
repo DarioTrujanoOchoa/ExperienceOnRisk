@@ -62,8 +62,9 @@ ExperienceRisk_Sessions %>%
     # Are people exploring?
     Free_choice_var = rowVars(as.matrix(select(.data = ExperienceRisk_Sessions,F1:F12)),na.rm = T)
     ) %>% 
+  mutate(diff_Exp_Payoffs = Exp_Payoffs_G2-Exp_Payoffs_G1) %>% 
   mutate(
-    sign_exp_payoff = sign(Exp_Payoffs_G2-Exp_Payoffs_G1),
+    sign_exp_payoff = sign(diff_Exp_Payoffs),
     # consider selecting always the same choice in the free choice subsection as no exploration
     explore = Free_choice_var!=0
     )
