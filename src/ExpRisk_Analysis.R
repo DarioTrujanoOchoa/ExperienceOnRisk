@@ -34,7 +34,7 @@ m2 <- lm(simple_diff ~
            Gender+
            CR.Payoff +
            sum_correct_payoffs+
-           numE_all+
+           numEven_all+
            explore+
            Session,
          data = ExperienceRisk_Sessions)

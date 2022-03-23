@@ -182,3 +182,35 @@ summary(m1)
 ```
 
 There is an effect of the CR when considering a dummy for having achieved at least one point in the test. If people got at least one point, they will increase by one the number of the gamble they chose.
+This effect in not longer significant if the regression include all the levels of CRT as regressors.
+
+```{r,echo=FALSE}
+m1 <- lm(simple_diff ~ 
+           CR.Payoff,
+         data = ExperienceRisk_Sessions)
+summary(m1)
+```
+
+### EP2 - EP1
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_bar(aes(x = factor(Exp_Payoffs_G1),fill = factor(CR.Payoff)),position="dodge")+
+  labs(x = "Gamble 1' Expected Payoff",fill= "CRT \nScore")
+```
+
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_boxplot(aes(y=diff_Exp_Payoffs,x=factor(CR.Payoff)))
+```
+
+
+```{r,echo=FALSE}
+m1 <- lm(diff_Exp_Payoffs ~ 
+           CR.Payoff>0,
+         data = ExperienceRisk_Sessions)
+summary(m1)
+```
+
+Like in the difference between the gamble chosen first and second, there is an effect of the CR when considering a dummy for having achieved at least one point in the test. If people got at least one point, they will increase by one the number of the gamble they chose.
