@@ -213,4 +213,67 @@ m1 <- lm(diff_Exp_Payoffs ~
 summary(m1)
 ```
 
-Like in the difference between the gamble chosen first and second, there is an effect of the CR when considering a dummy for having achieved at least one point in the test. If people got at least one point, they will increase by one the number of the gamble they chose.
+Like in the difference between the gamble chosen first and second, there is an effect of the CR when considering a dummy for having achieved at least one point in the test. 
+If people got at least one point, they will increase by one the number of the gamble they chose.
+
+## Gender differences
+
+## Regression
+
+### G2- G1
+```{r,echo=FALSE}
+m2 <- lm(simple_diff ~ 
+           Gamble.1 +
+           Gender +
+           CR.Payoff +
+           sum_correct_payoffs+
+           numEven_all+
+           explore+
+           Session,
+         data = ExperienceRisk_Sessions)
+summary(m2)
+```
+
+
+```{r,echo=FALSE}
+m2 <- lm(simple_diff ~ 
+           Gamble.1 +
+           CR.Payoff +
+           sum_correct_payoffs,
+         data = ExperienceRisk_Sessions)
+summary(m2)
+```
+
+### EP2- EP1
+
+```{r,echo=FALSE}
+m2 <- lm(diff_Exp_Payoffs ~ 
+           Gamble.1 +
+           Gender +
+           CR.Payoff +
+           sum_correct_payoffs+
+           numEven_all+
+           explore+
+           Session,
+         data = ExperienceRisk_Sessions)
+summary(m2)
+```
+
+```{r,echo=FALSE}
+m2 <- lm(diff_Exp_Payoffs ~ 
+           Gamble.1 +
+           sum_correct_payoffs,
+         data = ExperienceRisk_Sessions)
+summary(m2)
+```
+
+
+### CRT = 0
+
+```{r,echo=FALSE}
+m2 <- lm(diff_Exp_Payoffs ~ 
+           Gamble.1 +
+           less_than_12_even,
+         data = ExperienceRisk_Sessions %>% filter(CR.Payoff==0 & Gender=="F"))
+summary(m2)
+```

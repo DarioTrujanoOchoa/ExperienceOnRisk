@@ -12,12 +12,10 @@ p_load(matrixStats)
 
 ExperienceRisk_Sessions <- read.csv("Data/ExperienceRisk_Sessions.csv", fileEncoding="UTF-8-BOM")
 Payoffs <- read.csv("Data/Payoffs.csv", fileEncoding="UTF-8-BOM")
-Payoffs <- Payoffs %>% mutate(Exp_payoff = (A+B)/2, 
-                              #Gamble = ï..Gamble # problem with windows
-                              )
+Payoffs <- Payoffs %>% mutate(Exp_payoff = (A+B)/2)
 
-## number of mistakes
-
+# number of mistakes ----
+## function
 gamble_payoff <- function(gamble,event) {
   g_payoff <- Payoffs$A[match(gamble,Payoffs$Gamble)]
   g_payoff[event=="e"] <- Payoffs$B[match(gamble,Payoffs$Gamble)][event=="e"]
@@ -31,28 +29,31 @@ gamble_payoff <- function(gamble,event) {
 
 ### first 12 elections (pre selected) ----
 sum_correct_payoffs_first <- rep(0,length(ExperienceRisk_Sessions$Session))
+sum_payoffs_first <- rep(0,length(ExperienceRisk_Sessions$Session))
+
 for(p in 1:12){
-  correct_payoff <- gamble_payoff(ExperienceRisk_Sessions[,paste("R",p,sep="")],
-                                  ExperienceRisk_Sessions[,paste("E",p,sep="")]) == ExperienceRisk_Sessions[,paste("P",p,sep="")]
+  payoffs <-  gamble_payoff(ExperienceRisk_Sessions[,paste("R",p,sep="")],
+                                      ExperienceRisk_Sessions[,paste("E",p,sep="")])
+  correct_payoff <- payoffs == ExperienceRisk_Sessions[,paste("P",p,sep="")]
   sum_correct_payoffs_first <-  rowSums(cbind(correct_payoff,sum_correct_payoffs_first),na.rm = T)
+  sum_payoffs_first <- sum_payoffs_first + payoffs
 }
 
 ### second 12 elections (free elections) ----
 sum_correct_payoffs_second <- rep(0,length(ExperienceRisk_Sessions$Session))
 for(p in 1:12){
   correct_payoff <- gamble_payoff(ExperienceRisk_Sessions[,paste("F",p,sep="")],
-                                  ExperienceRisk_Sessions[,paste("EF",p,sep="")])== ExperienceRisk_Sessions[,paste("PF",p,sep="")]
+                                  ExperienceRisk_Sessions[,paste("EF",p,sep="")]) == ExperienceRisk_Sessions[,paste("PF",p,sep="")]
   sum_correct_payoffs_second <-  rowSums(cbind(correct_payoff,sum_correct_payoffs_second),na.rm = T)
 }
 
-# add sum of correct responses and create new useful data
+# add sum of correct responses and create new useful variables ----
 ExperienceRisk_Sessions <-
 ExperienceRisk_Sessions %>% 
   mutate(
     sum_correct_payoffs_first = sum_correct_payoffs_first, 
     sum_correct_payoffs_second = sum_correct_payoffs_second,
     simple_diff = Gamble.2 - Gamble.1,
-    #Session = ï..Session, # problem in windows
     sum_correct_payoffs = sum_correct_payoffs_second+sum_correct_payoffs_first,
     # number of even events
     numEven_all = numE_preselected+numE_freechoice,
@@ -66,7 +67,10 @@ ExperienceRisk_Sessions %>%
   mutate(
     sign_exp_payoff = sign(diff_Exp_Payoffs),
     # consider selecting always the same choice in the free choice subsection as no exploration
-    explore = Free_choice_var!=0
+    explore = Free_choice_var!=0,
+    male = Gender=="M",
+    less_than_12_even = numEven_all<12,
+    mean_payoff_periods = rowMeans(select())
     )
 
 sum(ExperienceRisk_Sessions$explore)
