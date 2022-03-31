@@ -32,19 +32,23 @@ sum_correct_payoffs_first <- rep(0,length(ExperienceRisk_Sessions$Session))
 sum_payoffs_first <- rep(0,length(ExperienceRisk_Sessions$Session))
 
 for(p in 1:12){
-  payoffs <-  gamble_payoff(ExperienceRisk_Sessions[,paste("R",p,sep="")],
-                                      ExperienceRisk_Sessions[,paste("E",p,sep="")])
+  payoffs <-  gamble_payoff(ExperienceRisk_Sessions[,paste("R",p,sep="")], # choice
+                                      ExperienceRisk_Sessions[,paste("E",p,sep="")]) # event
   correct_payoff <- payoffs == ExperienceRisk_Sessions[,paste("P",p,sep="")]
   sum_correct_payoffs_first <-  rowSums(cbind(correct_payoff,sum_correct_payoffs_first),na.rm = T)
-  sum_payoffs_first <- sum_payoffs_first + payoffs
+  sum_payoffs_first <- sum_payoffs_first + payoffs # cumulative payoffs
 }
 
 ### second 12 elections (free elections) ----
 sum_correct_payoffs_second <- rep(0,length(ExperienceRisk_Sessions$Session))
+sum_payoffs_second <- rep(0,length(ExperienceRisk_Sessions$Session))
+
 for(p in 1:12){
-  correct_payoff <- gamble_payoff(ExperienceRisk_Sessions[,paste("F",p,sep="")],
-                                  ExperienceRisk_Sessions[,paste("EF",p,sep="")]) == ExperienceRisk_Sessions[,paste("PF",p,sep="")]
+  payoffs <-  gamble_payoff(ExperienceRisk_Sessions[,paste("F",p,sep="")],
+                            ExperienceRisk_Sessions[,paste("EF",p,sep="")])
+  correct_payoff <- payoffs == ExperienceRisk_Sessions[,paste("PF",p,sep="")]
   sum_correct_payoffs_second <-  rowSums(cbind(correct_payoff,sum_correct_payoffs_second),na.rm = T)
+  sum_payoffs_second <- sum_payoffs_second + payoffs
 }
 
 # add sum of correct responses and create new useful variables ----
@@ -70,7 +74,10 @@ ExperienceRisk_Sessions %>%
     explore = Free_choice_var!=0,
     male = Gender=="M",
     less_than_12_even = numEven_all<12,
-    mean_payoff_periods = rowMeans(select())
+    mean_payoff_periods_first = sum_payoffs_first/12,
+    mean_payoff_periods_second = sum_payoffs_second/12,
+    mean_payoff_periods = (sum_payoffs_first + sum_payoffs_second)/24,
+    middle = Gamble.1-3
     )
 
 sum(ExperienceRisk_Sessions$explore)

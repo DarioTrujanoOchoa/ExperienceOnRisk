@@ -234,6 +234,19 @@ m2 <- lm(simple_diff ~
 summary(m2)
 ```
 
+```{r,echo=FALSE}
+m2 <- lm(Gamble.2 ~ 
+           middle +
+           Gender*CR.Payoff*even,
+         data = ExperienceRisk_Sessions %>% 
+           filter(Gender %in% c("F","M")) %>% 
+           mutate(CR.Payoff= factor(CR.Payoff),
+                  even = factor(less_than_12_even*(-1)+1))
+           )
+summary(m2)
+```
+
+
 
 ```{r,echo=FALSE}
 m2 <- lm(simple_diff ~ 
