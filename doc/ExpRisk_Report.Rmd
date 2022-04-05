@@ -14,6 +14,7 @@ library(pacman)
 p_load(tidyverse)
 p_load(janitor)
 p_load(xtable)
+p_load(stargazer)
 ```
 
 # Data description
@@ -85,12 +86,24 @@ ggplot(data = ExperienceRisk_Sessions) +
   labs(x = "Gamble Number",fill= "Directional \nChange of \nGamble")
 ```
 
+When analyzing the magnitude of the direction, it is clear that the main effect is driven by people moving from gamble 3 to gamble 4 (11 participants), and from gamble 4 to gamble 5 (8 participants).
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_bar(aes(x = factor(Gamble.1),
+               fill = factor(simple_diff)),
+           position="dodge",
+           colour="black")+
+  labs(x = "Gamble Number",fill= "Directional \nChange of \nGamble")
+```
+
+
 The Wilcox test shows that the difference is significant at 5% when analyzing the hypothesis that Gamble 2 is greater. 
 ```{r}
 wilcox.test(x = ExperienceRisk_Sessions$simple_diff,alternative = "greater")
 ```
 
-### EP 1 - EP2
+### EP1 - EP2
 
 ```{r,echo=FALSE}
 ggplot(data = ExperienceRisk_Sessions %>% 
@@ -115,6 +128,7 @@ wilcox.test(x = ExperienceRisk_Sessions$diff_Exp_Payoffs,alternative = "greater"
 ```{r}
 ExperienceRisk_Sessions %>% tabyl(Gamble.1,Gamble.2)
 ```
+
 
 ## Larger number of Even events will make people changing downwards
 
@@ -152,11 +166,31 @@ There is no significant effect of the overall number of events on the difference
 
 ## CR predicting more changes
 
+
 ```{r}
 ExperienceRisk_Sessions %>% 
   mutate(G1 = factor(Gamble.1),
          CRT = factor(CR.Payoff)) %>% 
   tabyl(G1,CRT)
+```
+
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(CR.Payoff==0) %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+  labs(x = "Gamble Number", fill = "Gamble Order",title = "CRT=0")
+```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(CR.Payoff>=0) %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+  labs(x = "Gamble Number", fill = "Gamble Order",title = "CRT>0")
 ```
 
 ### G2 - G1
@@ -218,10 +252,78 @@ If people got at least one point, they will increase by one the number of the ga
 
 ## Gender differences
 
+Male and Female participants moved in the expected direction; both moved towards higher gambles. However, both distributions are different. 
+
+The distribution of gamble choices among men changes towards gamble 6; risk loving. At the beginning, before the experience the distribution was more or less homogeneous between gambles 3 to 6. 
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(Gender=="M") %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+  labs(x = "Gamble Number", fill = "Gamble Order",title = "Male")
+```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(Gender=="F") %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+  labs(x = "Gamble Number", fill = "Gamble Order",title = "Female")
+```
+
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(Gender=="M"|Gender=="F") %>% 
+         select(Gender,Gamble.1) ) + 
+  geom_bar(aes(x = factor(Gamble.1),fill = Gender), 
+           position = "dodge")+
+  labs(x = "Gamble Number", 
+       fill = "Gender",
+       title = "Gendeder Differences Before Experience")
+```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(Gender=="M"|Gender=="F") %>% 
+         select(Gender,Gamble.1) ) + 
+  geom_density(aes(x = Gamble.1,fill = Gender),
+           alpha=.5)+
+  labs(x = "Gamble Number", 
+       fill = "Gender",
+       title = "Gendeder Differences Before Experience")
+```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(Gender=="M"|Gender=="F") %>% 
+         select(Gender,Gamble.2) ) + 
+  geom_bar(aes(x = factor(Gamble.2),fill = Gender),
+           position="dodge")+
+  labs(x = "Gamble Number", 
+       fill = "Gender",
+       title = "Gendeder Differences After Experience")
+```
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(Gender=="M"|Gender=="F") %>% 
+         select(Gender,Gamble.2) ) + 
+  geom_density(aes(x = Gamble.2,fill = Gender),
+           alpha=.5)+
+  labs(x = "Gamble Number", 
+       fill = "Gender",
+       title = "Gendeder Differences After Experience")
+```
+
+
 ## Regression
 
 ### G2- G1
-```{r,echo=FALSE}
+```{r,echo=FALSE,results='asis'}
 m2 <- lm(simple_diff ~ 
            Gamble.1 +
            Gender +
@@ -230,11 +332,22 @@ m2 <- lm(simple_diff ~
            numEven_all+
            explore+
            Session,
-         data = ExperienceRisk_Sessions)
-summary(m2)
+         data = ExperienceRisk_Sessions %>%
+           filter(Gender=="F"|Gender=="M") )
+
+m3 <- lm(simple_diff ~ 
+           Gamble.1 +
+           Gender +
+           CR.Payoff +
+           sum_correct_payoffs,
+         data = ExperienceRisk_Sessions%>%
+           filter(Gender=="F"|Gender=="M") )
+
+stargazer(m2, m3,header = F)
 ```
 
-```{r,echo=FALSE}
+
+```{r,echo=FALSE,results='asis'}
 m2 <- lm(Gamble.2 ~ 
            middle +
            Gender*CR.Payoff*even,
@@ -243,23 +356,12 @@ m2 <- lm(Gamble.2 ~
            mutate(CR.Payoff= factor(CR.Payoff),
                   even = factor(less_than_12_even*(-1)+1))
            )
-summary(m2)
-```
-
-
-
-```{r,echo=FALSE}
-m2 <- lm(simple_diff ~ 
-           Gamble.1 +
-           CR.Payoff +
-           sum_correct_payoffs,
-         data = ExperienceRisk_Sessions)
-summary(m2)
+stargazer(m2,header = F)
 ```
 
 ### EP2- EP1
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, results='asis'}
 m2 <- lm(diff_Exp_Payoffs ~ 
            Gamble.1 +
            Gender +
@@ -269,24 +371,22 @@ m2 <- lm(diff_Exp_Payoffs ~
            explore+
            Session,
          data = ExperienceRisk_Sessions)
-summary(m2)
-```
 
-```{r,echo=FALSE}
-m2 <- lm(diff_Exp_Payoffs ~ 
+m3 <- lm(diff_Exp_Payoffs ~ 
            Gamble.1 +
            sum_correct_payoffs,
          data = ExperienceRisk_Sessions)
-summary(m2)
+
+stargazer(m2, m3, header = F)
 ```
 
 
 ### CRT = 0
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, results='asis'}
 m2 <- lm(diff_Exp_Payoffs ~ 
            Gamble.1 +
            less_than_12_even,
          data = ExperienceRisk_Sessions %>% filter(CR.Payoff==0 & Gender=="F"))
-summary(m2)
+stargazer(m2, header = F, title="Expected Payoff when CRT=0")
 ```
