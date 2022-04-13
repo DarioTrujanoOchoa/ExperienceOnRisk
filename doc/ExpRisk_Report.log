@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.7) (preloaded format=pdflatex 2020.10.6)  4 APR 2022 20:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.7) (preloaded format=pdflatex 2020.10.6)  11 APR 2022 12:58
 entering extended mode
 **./ExpRisk_Report.tex
 (ExpRisk_Report.tex
@@ -574,10 +574,10 @@ File: ExpRisk_Report_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (typ
 e pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-8-1.pd
-f  used on input line 220.
+f  used on input line 217.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [4 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-6-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-9-1.pdf, id=61, 469.755pt x 32
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-9-1.pdf, id=60, 469.755pt x 32
 5.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (typ
 e pdf)
@@ -586,159 +586,230 @@ Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-9-1.pd
 f  used on input line 222.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [5 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-8-1.pdf>]
-Overfull \vbox (0.50487pt too high) detected at line 270
- []
-
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-10-1.pdf, id=71, 469.755pt x 3
+25.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-10-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-10-1.p
+df  used on input line 224.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [6 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-9-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-12-1.pdf, id=85, 469.755pt x 3
-25.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-12-1.pdf Graphic file (ty
-pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-12-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-12-1.p
-df  used on input line 272.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-14-1.pdf, id=86, 469.755pt x 3
-25.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (ty
-pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-14-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-14-1.p
-df  used on input line 309.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[7 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-12-1.pdf>]
-Overfull \vbox (1.11583pt too high) detected at line 344
+Overfull \vbox (0.50487pt too high) detected at line 272
  []
 
-[8 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-14-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-17-1.pdf, id=110, 469.755pt x 
-325.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (ty
+[7 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-10-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-13-1.pdf, id=96, 469.755pt x 3
+25.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (ty
 pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-17-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-17-1.p
-df  used on input line 356.
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-13-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-13-1.p
+df  used on input line 274.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-18-1.pdf, id=111, 469.755pt x 
+[8 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-13-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-16-1.pdf, id=106, 469.755pt x 
 325.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (ty
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (ty
 pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-18-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-18-1.p
-df  used on input line 358.
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-16-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-16-1.p
+df  used on input line 340.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[9 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-17-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-19-1.pdf, id=121, 469.755pt x 
+[9 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-16-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-19-1.pdf, id=118, 469.755pt x 
 325.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (ty
 pe pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-19-1.p
-df  used on input line 363.
+df  used on input line 387.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[10 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-18-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.pdf, id=132, 469.755pt x 
+[10]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.pdf, id=125, 469.755pt x 
 325.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (ty
 pe pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.p
-df  used on input line 365.
+df  used on input line 389.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [11 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-19-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-21-1.pdf, id=135, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-21-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-21-1.p
+df  used on input line 394.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[12 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-22-1.pdf, id=146, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-22-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-22-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-22-1.p
+df  used on input line 396.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[13 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-21-1.pdf>]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-386.
+417.
 ("C:\Program Files\MiKTeX 2.9\tex/latex/lm\ts1lmtt.fd"
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [12 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-20-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-23-1.pdf, id=153, 469.755pt x 
+) [14 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-22-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-25-1.pdf, id=168, 469.755pt x 
 325.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (ty
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-25-1.pdf Graphic file (ty
 pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-23-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-23-1.p
-df  used on input line 416.
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-25-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-25-1.p
+df  used on input line 447.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-24-1.pdf, id=154, 469.755pt x 
-325.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (ty
-pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-24-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-24-1.p
-df  used on input line 418.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[13 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-23-1.pdf>] [14 <./ExpRis
-k_Report_files/figure-latex/unnamed-chunk-24-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.pdf, id=178, 469.755pt x 
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.pdf, id=169, 469.755pt x 
 325.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.pdf Graphic file (ty
 pe pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.p
-df  used on input line 456.
+df  used on input line 449.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-27-1.pdf, id=179, 469.755pt x 
-325.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (ty
-pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-27-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-27-1.p
-df  used on input line 458.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.pdf, id=189, 469.755pt x 
+[15 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-25-1.pdf>]
+Underfull \vbox (badness 2426) detected at line 485
+ []
+
+[16 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-26-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.pdf, id=192, 469.755pt x 
 325.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.pdf Graphic file (ty
 pe pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.p
-df  used on input line 460.
+df  used on input line 491.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[16 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-27-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-29-1.pdf, id=199, 469.755pt x 
-325.215pt>
-File: ExpRisk_Report_files/figure-latex/unnamed-chunk-29-1.pdf Graphic file (ty
-pe pdf)
-<use ExpRisk_Report_files/figure-latex/unnamed-chunk-29-1.pdf>
-Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-29-1.p
-df  used on input line 462.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Overfull \hbox (2.7436pt too wide) in paragraph at lines 521--521
+[]\T1/lmtt/m/n/10 ## lm(formula = diff_Exp_Payoffs ~ mean_payoff_periods, data 
+= ExperienceRisk_Sessions %>%[] 
+ []
+
 [17 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf, id=209, 469.755pt x 
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf, id=202, 469.755pt x 
 325.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (ty
 pe pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.p
-df  used on input line 464.
+df  used on input line 533.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[18 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-29-1.pdf>]
-<ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.pdf, id=222, 469.755pt x 
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.pdf, id=203, 469.755pt x 
 325.215pt>
 File: ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.pdf Graphic file (ty
 pe pdf)
 <use ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.pdf>
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.p
-df  used on input line 466.
+df  used on input line 535.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[19 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf>]
+[18 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-32-1.pdf, id=215, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-32-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-32-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-32-1.p
+df  used on input line 537.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[19 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-33-1.pdf, id=226, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-33-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-33-1.p
+df  used on input line 539.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[20 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-32-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-34-1.pdf, id=236, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-34-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-34-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-34-1.p
+df  used on input line 541.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[21 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-33-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-35-1.pdf, id=249, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-35-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-35-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-35-1.p
+df  used on input line 543.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[22 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-34-1.pdf>]
 
-LaTeX Warning: Float too large for page by 106.55936pt on input line 592.
+LaTeX Warning: Float too large for page by 106.55936pt on input line 669.
 
-[20 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-31-1.pdf>] [21] [22] [23
-] [24] (ExpRisk_Report.aux)
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-39-1.pdf, id=259, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-39-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-39-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-39-1.p
+df  used on input line 741.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[23 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-35-1.pdf>] [24] [25] [26
+]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-40-1.pdf, id=301, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-40-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-40-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-40-1.p
+df  used on input line 756.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[27 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-39-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-41-1.pdf, id=311, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-41-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-41-1.p
+df  used on input line 771.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[28 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-40-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-42-1.pdf, id=321, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-42-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-42-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-42-1.p
+df  used on input line 786.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[29 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-41-1.pdf>] [30 <./ExpRis
+k_Report_files/figure-latex/unnamed-chunk-42-1.pdf>]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.pdf, id=345, 469.755pt x 
+325.215pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.p
+df  used on input line 834.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[31 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.pdf>] (ExpRisk_Repo
+rt.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13634 strings out of 480202
- 206059 string characters out of 2887029
- 543849 words of memory out of 3000000
- 29856 multiletter control sequences out of 15000+200000
+ 13691 strings out of 480202
+ 208631 string characters out of 2887029
+ 541949 words of memory out of 3000000
+ 29895 multiletter control sequences out of 15000+200000
  587117 words of font info for 91 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,10n,77p,826b,472s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 71i,10n,77p,826b,474s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Fil
 es/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTeX 2.9/fonts/e
 nc/dvips/lm/lm-mathsy.enc}{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec
@@ -752,11 +823,11 @@ public/lm/lmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/lm/lmtt10.pfb>
-Output written on ExpRisk_Report.pdf (24 pages, 394404 bytes).
+Output written on ExpRisk_Report.pdf (31 pages, 451649 bytes).
 PDF statistics:
- 390 PDF objects out of 1000 (max. 8388607)
- 67 named destinations out of 1000 (max. 500000)
- 12533 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 477 PDF objects out of 1000 (max. 8388607)
+ 78 named destinations out of 1000 (max. 500000)
+ 12584 words of extra memory for PDF output out of 14400 (max. 10000000)
 
 
 ! pdflatex: major issue: So far, no MiKTeX administrator has checked for updates.

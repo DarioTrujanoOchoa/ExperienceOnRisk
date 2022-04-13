@@ -103,6 +103,16 @@ The Wilcox test shows that the difference is significant at 5% when analyzing th
 wilcox.test(x = ExperienceRisk_Sessions$simple_diff,alternative = "greater")
 ```
 
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_bar(aes(x = factor(simple_diff),
+               fill = factor(Gamble.1)),
+           position="dodge",
+           colour="black")+
+  labs(x = "G2-G1",fill= "Gamble 1")
+```
+
+
 ### EP1 - EP2
 
 ```{r,echo=FALSE}
@@ -148,6 +158,14 @@ summary(m1)
 
 There is no significant effect of the overall number of events on the difference between Gamble 1 and 2.
 
+```{r}
+m1 <- lm(simple_diff ~ 
+           numEven_all,
+         data = ExperienceRisk_Sessions %>% filter(sum_correct_payoffs>18) )
+summary(m1)
+```
+
+
 ### Excpected Payoff 1 - Expected Payoff 2
 ```{r, echo=FALSE}
 ggplot(data = ExperienceRisk_Sessions) + 
@@ -192,6 +210,8 @@ ggplot(data = ExperienceRisk_Sessions %>%
   geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
   labs(x = "Gamble Number", fill = "Gamble Order",title = "CRT>0")
 ```
+
+
 
 ### G2 - G1
 
@@ -249,6 +269,21 @@ summary(m1)
 
 Like in the difference between the gamble chosen first and second, there is an effect of the CR when considering a dummy for having achieved at least one point in the test. 
 If people got at least one point, they will increase by one the number of the gamble they chose.
+
+## Effects of history
+
+```{r}
+ggplot(data = ExperienceRisk_Sessions) + 
+  geom_point(aes(x=mean_payoff_periods,y=simple_diff))
+```
+
+```{r}
+m1 <- lm(diff_Exp_Payoffs ~ 
+           mean_payoff_periods,
+         data = ExperienceRisk_Sessions %>% filter(CR.Payoff!=0) )
+summary(m1)
+```
+
 
 ## Gender differences
 
@@ -381,12 +416,67 @@ stargazer(m2, m3, header = F)
 ```
 
 
-### CRT = 0
+# CRT = 0
+
+```{r}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(CR.Payoff!=0) %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Gamble_Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+  labs(x = "Gamble Number", fill = "Gamble Order",title="Distribution when CRT is not cero")
+```
+
+
+```{r}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         select(Gamble.1,CR.Payoff) ) + 
+  geom_bar(aes(x = factor(Gamble.1),
+               fill = factor(CR.Payoff)),
+           position="dodge") +
+  labs(x = "Gamble Number", 
+       fill = "Cognitive Test",
+       title ="Distribution of First Gamble when CRT is not cero")
+```
+
+
+```{r}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         select(Gamble.2,CR.Payoff) ) + 
+  geom_bar(aes(x = factor(Gamble.2),
+               fill = factor(CR.Payoff)),
+           position="dodge") +
+  labs(x = "Gamble Number", 
+       fill = "Cognitive Test",
+       title ="Distribution of Second Gamble when CRT is not cero")
+```
+
+```{r}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         select(simple_diff,CR.Payoff) ) + 
+  geom_density(aes(x = simple_diff,
+               fill = factor(CR.Payoff==0)),
+           alpha=0.5)+
+  labs(x = "G2-G1", 
+       fill = "CRT=0",
+       title="Distribution of Change when CRT is not cero")
+```
+
 
 ```{r,echo=FALSE, results='asis'}
 m2 <- lm(diff_Exp_Payoffs ~ 
            Gamble.1 +
            less_than_12_even,
          data = ExperienceRisk_Sessions %>% filter(CR.Payoff==0 & Gender=="F"))
-stargazer(m2, header = F, title="Expected Payoff when CRT=0")
+stargazer(m2, header = F, title="Expected Payoff among Females with CRT=0")
 ```
+
+## effect of history
+
+```{r}
+ggplot(data = ExperienceRisk_Sessions %>% 
+         filter(CR.Payoff!=0) ) + 
+  geom_point(aes(x=mean_payoff_periods,y=simple_diff))
+```
+
+
