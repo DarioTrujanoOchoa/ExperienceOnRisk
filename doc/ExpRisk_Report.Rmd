@@ -479,4 +479,35 @@ ggplot(data = ExperienceRisk_Sessions %>%
   geom_point(aes(x=mean_payoff_periods,y=simple_diff))
 ```
 
+# Follow-up survey
+
+```{r}
+ggplot(data = ExperienceRisk %>% 
+         filter(!is.na(max_exp_gamble)))+
+  geom_bar(aes(x= factor(max_exp_gamble)))+
+  labs(x="Gamble",title = "Which gamble has the highest expected payoff?")
+
+```
+
+```{r}
+
+ggplot(data = ExperienceRisk %>% 
+         filter(!is.na(guess_average_5_highest)))+
+  geom_bar(aes(x= factor(guess_average_5_highest)))+
+  labs(x="Gamble",title = "What is your guess about the average guess about \nhow many people in the experiment noticed that Row 5 has the highest expected value?")
+
+```
+
+
+```{r}
+
+ggplot(data = ExperienceRisk %>% 
+         filter(!is.na(guess_gamble_most_chosen)))+
+  geom_bar(aes(x= factor(guess_gamble_most_chosen)))+
+  labs(x="Gamble",title = "Which gamble was chosen most commonly in the last section of the experiment \n (the final decision after you had some experience with the task)?")
+
+```
+
+
+
 

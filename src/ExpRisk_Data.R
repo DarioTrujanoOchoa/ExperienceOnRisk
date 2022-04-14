@@ -120,4 +120,5 @@ sum(ExperienceRisk_Sessions$explore)
 
 # export data 
 save(ExperienceRisk,file = 'data/ExperienceRisk_Sessions.RData')
+write.csv(x = ExperienceRisk,file = "data/ExperienceRisk_Sessions.csv")
 
