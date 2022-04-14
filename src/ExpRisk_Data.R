@@ -10,9 +10,41 @@ p_load(matrixStats)
 
 # Data set ----
 
-ExperienceRisk_Sessions <- read.csv("Data/ExperienceRisk_Sessions.csv", fileEncoding="UTF-8-BOM")
-Payoffs <- read.csv("Data/Payoffs.csv", fileEncoding="UTF-8-BOM")
+## data from the experiment
+ExperienceRisk_Sessions <- read.csv("data/ExperienceRisk_ID.csv", fileEncoding="UTF-8-BOM")
+ExperienceRisk_Sessions <- ExperienceRisk_Sessions %>% 
+  # create standard emails for matching
+  mutate(Email = str_trim(Email)) %>% 
+  mutate(Email = str_to_lower(Email)) %>% 
+  mutate(Email =  str_remove(Email, "umail.")) %>% 
+  mutate(Email = str_replace(Email,"gmail.com","ucsb.edu")) %>% 
+  # Some emails that were clearly misspelled 
+  mutate(Email = str_replace(Email,"kevin.sanguanlosit@ucsb.edu","kevin_sanguanlosit@ucsb.edu")) %>% 
+  mutate(Email = str_replace(Email,"danielfabian2003@ucsb.edu","danielfabian@ucsb.edu")) 
+
+## payoff used in the experiment
+Payoffs <- read.csv("data/Payoffs.csv", fileEncoding="UTF-8-BOM")
 Payoffs <- Payoffs %>% mutate(Exp_payoff = (A+B)/2)
+
+# Merging ----
+
+## data from follow-up survey
+EBEL_.follow.up <- read.csv("data/EBEL_ follow-up.csv")
+EBEL_.follow.up <- EBEL_.follow.up %>% 
+  # create standard emails for matching
+  mutate(Email = str_to_lower(Email)) %>% 
+  mutate(Email =  str_remove(Email, "umail."))%>% 
+  mutate(Email = str_replace(Email,"gmail.com","ucsb.edu"))
+
+ExperienceRisk <- left_join(ExperienceRisk_Sessions,EBEL_.follow.up,by = "Email")
+ExperienceRisk$Email
+
+# Emails of people in the survey, but not matched in the experiment
+EBEL_.follow.up %>% filter(!(EBEL_.follow.up$Email %in% ExperienceRisk_Sessions$Email))%>% 
+  select(Email)
+# Emails of people in the experiment, not matched with the survey 
+ExperienceRisk_Sessions %>% filter(!(ExperienceRisk_Sessions$Email %in% EBEL_.follow.up$Email)) %>% 
+  select(Email) %>% mutate(Email =  str_remove(Email, "umail."))
 
 # number of mistakes ----
 ## function
@@ -87,5 +119,5 @@ sum(ExperienceRisk_Sessions$explore)
 # View(ExperienceRisk_Sessions %>% select(-starts_with(c("F","R","E","P"))))
 
 # export data 
-save(ExperienceRisk_Sessions,file = 'data/ExperienceRisk_Sessions.RData')
+save(ExperienceRisk,file = 'data/ExperienceRisk_Sessions.RData')
 
