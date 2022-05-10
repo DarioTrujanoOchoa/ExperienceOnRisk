@@ -1,0 +1,6 @@
+"";"Gamble.1";"Gamble.2";"max_exp_gamble";"guess_gamble_most_chosen";"CR.Payoff"
+"Gamble.1";"1.000   ";"";"";"";""
+"Gamble.2";"0.546***";"1.000   ";"";"";""
+"max_exp_gamble";"0.028   ";"0.073   ";"1.000   ";"";""
+"guess_gamble_most_chosen";"0.387***";"0.527***";"0.182   ";"1.000   ";""
+"CR.Payoff";"0.157   ";"0.277** ";"0.304** ";"0.347** ";"1.000   "

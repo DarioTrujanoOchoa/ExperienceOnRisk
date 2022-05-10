@@ -35,21 +35,6 @@ EBEL_.follow.up <- EBEL_.follow.up %>%
   mutate(Email = str_replace(Email,"gmail.com","ucsb.edu")) %>% 
   filter(Email != "")
 
-## Merging ----
-ExperienceRisk <- left_join(ExperienceRisk_Sessions,
-                            EBEL_.follow.up,
-                            by = "Email")
-ExperienceRisk$Email
-
-# Emails of people in the survey, but not matched in the experiment
-EBEL_.follow.up %>% 
-  filter(!(EBEL_.follow.up$Email %in% ExperienceRisk_Sessions$Email))%>% 
-  select(Email)
-# Emails of people in the experiment, not matched with the survey 
-ExperienceRisk_Sessions %>% 
-  filter(!(ExperienceRisk_Sessions$Email %in% EBEL_.follow.up$Email)) %>% 
-  select(Email)
-
 # number of mistakes ----
 ## function
 gamble_payoff <- function(gamble,event) {
@@ -91,6 +76,7 @@ for(p in 1:12){
 ExperienceRisk_Sessions <-
 ExperienceRisk_Sessions %>% 
   mutate(
+    # correct payoffs from participants
     sum_correct_payoffs_first = sum_correct_payoffs_first, 
     sum_correct_payoffs_second = sum_correct_payoffs_second,
     simple_diff = Gamble.2 - Gamble.1,
@@ -121,6 +107,22 @@ sum(ExperienceRisk_Sessions$explore)
 
 # #To check data 
 # View(ExperienceRisk_Sessions %>% select(-starts_with(c("F","R","E","P"))))
+
+## Merging ----
+ExperienceRisk <- left_join(ExperienceRisk_Sessions,
+                            EBEL_.follow.up,
+                            by = "Email")
+ExperienceRisk$Email
+
+# Emails of people in the survey, but not matched in the experiment
+EBEL_.follow.up %>% 
+  filter(!(EBEL_.follow.up$Email %in% ExperienceRisk_Sessions$Email))%>% 
+  select(Email)
+# Emails of people in the experiment, not matched with the survey 
+ExperienceRisk_Sessions %>% 
+  filter(!(ExperienceRisk_Sessions$Email %in% EBEL_.follow.up$Email)) %>% 
+  select(Email)
+
 
 # export data 
 save(ExperienceRisk,file = 'data/ExperienceRisk_Sessions.RData')

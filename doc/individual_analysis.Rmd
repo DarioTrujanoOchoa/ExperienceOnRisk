@@ -1,0 +1,65 @@
+---
+title: "Individual Analysis"
+author: "Dario Trujano-Ochoa"
+date: "5/9/2022"
+output: 
+  pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# Dario Trujano-Ochoa
+# individual Analysis
+
+library(pacman)
+p_load(tidyverse)
+p_load(janitor)
+p_load(xtable)
+
+
+rm(list = ls())
+
+load('../data/ExperienceRisk_Sessions.RData')
+source('../src/functions.R')
+
+```
+
+
+# Are people consistent with their own beliefs about others?
+
+As part of the follow-up survey, the participants were asked what was the maximum gable, and to asked what was the gamble chosen by others. 
+This last decision was incentivized. 
+
+
+```{r,results='asis',echo=FALSE,message=FALSE}
+gamble_choices <- ExperienceRisk %>% select(Gamble.1, Gamble.2, max_exp_gamble, guess_gamble_most_chosen,CR.Payoff)
+
+simple_diff_and_others <- ExperienceRisk %>% select(simple_diff, 
+                                                    Gamble.1,
+                                                    max_exp_gamble, guess_gamble_most_chosen,
+                                                    CR.Payoff,
+                                                    sum_correct_payoffs,
+                                                    numEven_all,less_than_12_even,
+                                                    mean_payoff_periods)
+
+corstars(gamble_choices,
+         result = "latex")
+
+corstars(simple_diff_and_others,
+         result = "latex")
+
+cor(simple_diff_and_others,use = "na.or.complete")
+
+
+save_correlation_matrix(gamble_choices,
+                        filename = "../results/gamble_choices_corr.csv",
+                        use="lower",
+                        digits= 3)
+print("$p < .0001^{****}, p < .001^{***}, p < .01^{**}, p < .05^{*}$")
+```
+
+The answer to the gamble with the maximum expected value is not correlated with the gamble choices.
+In addition, even when this correlation is not large, the gamble chosen at the end of the experiment (Gamble.2) is correlated with all other gamble choices.
+The largest correlation is between the gambles in the experiment. 
+Surprisingly, the correlation between this gamble choice and the guess people made about the gamble chosen by others in the follow-up survey almost as large.
+

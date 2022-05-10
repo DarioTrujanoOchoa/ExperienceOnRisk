@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  13 APR 2022 16:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  5 MAY 2022 14:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -666,12 +666,6 @@ pe pdf)
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.p
 df  used on input line 491.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-
-Overfull \hbox (2.7436pt too wide) in paragraph at lines 521--521
-[]\T1/lmtt/m/n/10 ## lm(formula = diff_Exp_Payoffs ~ mean_payoff_periods, data 
-= ExperienceRisk_Sessions %>%[] 
- []
-
 [16 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-28-1.pdf>]
 <ExpRisk_Report_files/figure-latex/unnamed-chunk-30-1.pdf, id=231, 453.695pt x 
 316.18124pt>
@@ -775,21 +769,48 @@ pe pdf)
 Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.p
 df  used on input line 834.
 (pdftex.def)             Requested size: 459.74442pt x 315.19595pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 836.
-[28 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 836.
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-45-1.pdf, id=388, 459.7175pt x
+ 313.17pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-45-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-45-1.p
+df  used on input line 848.
+(pdftex.def)             Requested size: 459.7304pt x 313.17877pt.
+[28 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-44-1.pdf>] [29 <./ExpRis
+k_Report_files/figure-latex/unnamed-chunk-45-1.pdf>] [30] [31]
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-46-1.pdf, id=422, 464.73625pt 
+x 313.17pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-46-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-46-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-46-1.p
+df  used on input line 1111.
+(pdftex.def)             Requested size: 464.74928pt x 313.17877pt.
+<ExpRisk_Report_files/figure-latex/unnamed-chunk-47-1.pdf, id=423, 464.73625pt 
+x 313.17pt>
+File: ExpRisk_Report_files/figure-latex/unnamed-chunk-47-1.pdf Graphic file (ty
+pe pdf)
+<use ExpRisk_Report_files/figure-latex/unnamed-chunk-47-1.pdf>
+Package pdftex.def Info: ExpRisk_Report_files/figure-latex/unnamed-chunk-47-1.p
+df  used on input line 1122.
+(pdftex.def)             Requested size: 464.74928pt x 313.17877pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1124.
+[32 <./ExpRisk_Report_files/figure-latex/unnamed-chunk-46-1.pdf>] [33 <./ExpRis
+k_Report_files/figure-latex/unnamed-chunk-47-1.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1124.
 (./ExpRisk_Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 836.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 836.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1124.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 1124.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13726 strings out of 480608
- 208115 string characters out of 5903631
- 505265 words of memory out of 5000000
- 29246 multiletter control sequences out of 15000+600000
+ 13753 strings out of 480608
+ 209236 string characters out of 5903631
+ 505306 words of memory out of 5000000
+ 29263 multiletter control sequences out of 15000+600000
  584367 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,42p,824b,467s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -807,10 +828,10 @@ ype1/public/lm/lmr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
 lm/lmri10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy10.
 pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/l
 ocal/texlive/2020/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on ExpRisk_Report.pdf (28 pages, 421647 bytes).
+Output written on ExpRisk_Report.pdf (33 pages, 440683 bytes).
 PDF statistics:
- 521 PDF objects out of 1000 (max. 8388607)
- 397 compressed objects within 4 object streams
- 75 named destinations out of 1000 (max. 500000)
- 12584 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 573 PDF objects out of 1000 (max. 8388607)
+ 434 compressed objects within 5 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 12607 words of extra memory for PDF output out of 14400 (max. 10000000)
 
