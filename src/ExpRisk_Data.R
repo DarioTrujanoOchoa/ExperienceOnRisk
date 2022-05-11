@@ -55,8 +55,10 @@ sum_payoffs_first <- rep(0,length(ExperienceRisk_Sessions$Session))
 for(p in 1:12){
   payoffs <-  gamble_payoff(ExperienceRisk_Sessions[,paste("R",p,sep="")], # choice
                                       ExperienceRisk_Sessions[,paste("E",p,sep="")]) # event
+  # Did they stated the correct payoff?
   correct_payoff <- payoffs == ExperienceRisk_Sessions[,paste("P",p,sep="")]
   sum_correct_payoffs_first <-  rowSums(cbind(correct_payoff,sum_correct_payoffs_first),na.rm = T)
+  # Final payoff
   sum_payoffs_first <- sum_payoffs_first + payoffs # cumulative payoffs
 }
 
@@ -67,8 +69,10 @@ sum_payoffs_second <- rep(0,length(ExperienceRisk_Sessions$Session))
 for(p in 1:12){
   payoffs <-  gamble_payoff(ExperienceRisk_Sessions[,paste("F",p,sep="")],
                             ExperienceRisk_Sessions[,paste("EF",p,sep="")])
+  # Did they stated the correct payoff?
   correct_payoff <- payoffs == ExperienceRisk_Sessions[,paste("PF",p,sep="")]
   sum_correct_payoffs_second <-  rowSums(cbind(correct_payoff,sum_correct_payoffs_second),na.rm = T)
+  # Final payoff
   sum_payoffs_second <- sum_payoffs_second + payoffs
 }
 

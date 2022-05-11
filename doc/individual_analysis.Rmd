@@ -13,8 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(pacman)
 p_load(tidyverse)
+p_load(ggplot2)
 p_load(janitor)
 p_load(xtable)
+p_load(stargazer)
 
 
 rm(list = ls())
@@ -45,12 +47,12 @@ simple_diff_and_others <- ExperienceRisk %>% select(simple_diff,
 corstars(gamble_choices,
          result = "latex")
 
-corstars(simple_diff_and_others,
-         result = "latex")
+# corstars(simple_diff_and_others,
+#          result = "latex")
 
-cor(simple_diff_and_others,use = "na.or.complete")
+#cor(simple_diff_and_others,use = "na.or.complete")
 
-
+# cor(gamble_choices,use = "na.or.complete")
 save_correlation_matrix(gamble_choices,
                         filename = "../results/gamble_choices_corr.csv",
                         use="lower",
@@ -58,8 +60,68 @@ save_correlation_matrix(gamble_choices,
 print("$p < .0001^{****}, p < .001^{***}, p < .01^{**}, p < .05^{*}$")
 ```
 
-The answer to the gamble with the maximum expected value is not correlated with the gamble choices.
+The payoff in the CRT is correlated with everything except for the choice in the first gamble. 
+The answer to the gamble with the maximum expected value is correlated only with the payoff in the CRT.
 In addition, even when this correlation is not large, the gamble chosen at the end of the experiment (Gamble.2) is correlated with all other gamble choices.
 The largest correlation is between the gambles in the experiment. 
 Surprisingly, the correlation between this gamble choice and the guess people made about the gamble chosen by others in the follow-up survey almost as large.
+
+# Descriptive Statitics 
+
+It seems that people tend to think that the others are less risk averse than themselves. 
+The main difference between the participants' guesses about others and their choices at the end is that people choose gamble 6 very often, while reporting that other were not doing the same. 
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk)+
+  geom_bar(aes(x=max_exp_gamble))
+
+ggplot(data = ExperienceRisk)+
+  geom_bar(aes(x=guess_gamble_most_chosen))
+
+ggplot(data = ExperienceRisk %>% 
+         select(guess_gamble_most_chosen,Gamble.2) %>% 
+         gather("Guess_Choice","Gamble"))+
+  geom_bar(aes(x=Gamble, fill = Guess_Choice), 
+           position = "dodge")
+
+ggplot(data = ExperienceRisk %>% 
+         select(guess_gamble_most_chosen,Gamble.2) %>% 
+         gather("Guess_Choice","Gamble"))+
+  geom_density(aes(x=Gamble, fill = Guess_Choice), 
+           alpha = 0.5)
+
+```
+
+# Regressions
+
+```{r,echo=FALSE,results='asis'}
+m1 <- lm(guess_gamble_most_chosen~
+           Gamble.2+
+           Gamble.1+
+           Gender +
+           CR.Payoff +
+           sum_correct_payoffs+
+           numEven_all+
+           explore+
+           mean_payoff_periods +
+           Session,
+         data = ExperienceRisk %>%
+           filter(Gender=="F"|Gender=="M"))
+
+m2 <- lm(guess_gamble_most_chosen ~ 
+           Gamble.2 +
+           Gamble.1 +
+           Gender +
+           CR.Payoff +
+           sum_correct_payoffs,
+         data = ExperienceRisk%>%
+           filter(Gender=="F"|Gender=="M") )
+
+m3 <- lm(guess_gamble_most_chosen ~ 
+           Gamble.2,
+         data = ExperienceRisk%>%
+           filter(Gender=="F"|Gender=="M") )
+
+stargazer(m1, m2, m3, header = F)
+```
 

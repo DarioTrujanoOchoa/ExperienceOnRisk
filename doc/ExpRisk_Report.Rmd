@@ -5,7 +5,7 @@ date: "3/22/2022"
 header-includes:
    - \usepackage{multirow}
    - \usepackage{xcolor}
-output: word_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -139,10 +139,62 @@ wilcox.test(x = ExperienceRisk$diff_Exp_Payoffs,alternative = "greater")
 ExperienceRisk %>% tabyl(Gamble.1,Gamble.2)
 ```
 
+## Effects of history
 
-## Larger number of Even events will make people changing downwards
+It seems that the final average payoff in the previous periods is not explaining the change in risk attitudes. 
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk ) + 
+  geom_point(aes(x=mean_payoff_periods,
+                 y=simple_diff,
+                 fill=factor(Gamble.1),color = factor(Gamble.1)))
 
-### Gamble 1 - Gamble 2
+ggplot(data = ExperienceRisk ) + 
+  geom_point(aes(x=mean_payoff_periods,
+                 y=diff_Exp_Payoffs,
+                 fill=factor(Gamble.1),color = factor(Gamble.1)))
+```
+
+There is no significant effect of the final payoff on the change in the gamble chosen. 
+
+
+```{r}
+m1 <- lm(simple_diff ~ 
+           mean_payoff_periods,
+         data = ExperienceRisk )
+summary(m1)
+
+m1 <- lm(diff_Exp_Payoffs ~ 
+           mean_payoff_periods,
+         data = ExperienceRisk )
+summary(m1)
+
+```
+
+When conditioning on the people that choose gamble 3 at the beginning (the most common choice), the effect p-value is better, but still not significant. 
+An interesting fact is that the coefficient is negative. 
+This could be evidence of gambler's fallacy; after observing an array of good luck with risky choices, people prefer to play safe at the end. 
+This is consistent with the negative coefficients observed in the effect of the number of even numbers. 
+
+```{r}
+m1 <- lm(simple_diff ~ 
+           mean_payoff_periods,
+         data = ExperienceRisk %>% filter(Gamble.1==3))
+summary(m1)
+
+m1 <- lm(diff_Exp_Payoffs ~ 
+           mean_payoff_periods,
+         data = ExperienceRisk %>% filter(Gamble.1==3))
+summary(m1)
+
+```
+
+
+### Larger number of Even events will make people changing downwards
+
+#### Gamble 1 - Gamble 2
+
+There is no significant effect of the overall number of events on the difference between Gamble 1 and 2. 
+
 ```{r}
 ggplot(data = ExperienceRisk) + 
   geom_point(aes(x=numEven_all,y=simple_diff))
@@ -156,7 +208,14 @@ m1 <- lm(simple_diff ~
 summary(m1)
 ```
 
-There is no significant effect of the overall number of events on the difference between Gamble 1 and 2.
+This can be also be seen in the correlation:
+
+```{r}
+cor.test(ExperienceRisk$mean_payoff_periods,ExperienceRisk$simple_diff,use = "na.or.complete")
+```
+
+This also happens for people that had more than 18 correct answers out of the 24 experience trials. 
+The final sample was 73 and control for people that didn't put attention, and the first session where the realization were too fast and people didn't have enough time to record their answers.
 
 ```{r}
 m1 <- lm(simple_diff ~ 
@@ -166,7 +225,10 @@ summary(m1)
 ```
 
 
-### Excpected Payoff 1 - Expected Payoff 2
+#### Excpected Payoff 1 - Expected Payoff 2
+
+There is also no significant effect of the overall number of events on the difference between Expected Payoffs in Gamble 1 and 2.
+
 ```{r, echo=FALSE}
 ggplot(data = ExperienceRisk) + 
   geom_point(aes(y=diff_Exp_Payoffs,x=numEven_all))
@@ -180,7 +242,13 @@ m1 <- lm(diff_Exp_Payoffs ~
 summary(m1)
 ```
 
-There is no significant effect of the overall number of events on the difference between Expected Payoffs in Gamble 1 and 2.
+### Reinforcement
+
+The final average payment might not be that informative. It is possible that the same final payment could have been reached with two different histories. Even when the final average is informative about the magnitude and frequency of reinforcements for risk behavior: higher final payment are achieved by risk takers with good luck, and lower final payments are due to risk takers with bad luck. However, for people with similar final payoffs the history might be quite different. 
+
+```{r}
+```
+
 
 ## CR predicting more changes
 
@@ -270,19 +338,6 @@ summary(m1)
 Like in the difference between the gamble chosen first and second, there is an effect of the CR when considering a dummy for having achieved at least one point in the test. 
 If people got at least one point, they will increase by one the number of the gamble they chose.
 
-## Effects of history
-
-```{r}
-ggplot(data = ExperienceRisk) + 
-  geom_point(aes(x=mean_payoff_periods,y=simple_diff))
-```
-
-```{r}
-m1 <- lm(diff_Exp_Payoffs ~ 
-           mean_payoff_periods,
-         data = ExperienceRisk %>% filter(CR.Payoff!=0) )
-summary(m1)
-```
 
 
 ## Gender differences
@@ -290,6 +345,8 @@ summary(m1)
 Male and Female participants moved in the expected direction; both moved towards higher gambles. However, both distributions are different. 
 
 The distribution of gamble choices among men changes towards gamble 6; risk loving. At the beginning, before the experience the distribution was more or less homogeneous between gambles 3 to 6. 
+
+### Differences in choices
 
 ```{r,echo=FALSE}
 ggplot(data = ExperienceRisk %>% 
@@ -318,7 +375,7 @@ ggplot(data = ExperienceRisk %>%
            position = "dodge")+
   labs(x = "Gamble Number", 
        fill = "Gender",
-       title = "Gendeder Differences Before Experience")
+       title = "Gendeder Differences Before Experience (Gamble 1)")
 ```
 
 ```{r,echo=FALSE}
@@ -329,7 +386,7 @@ ggplot(data = ExperienceRisk %>%
            alpha=.5)+
   labs(x = "Gamble Number", 
        fill = "Gender",
-       title = "Gendeder Differences Before Experience")
+       title = "Gendeder Differences Before Experience (Gamble 1)")
 ```
 
 ```{r,echo=FALSE}
@@ -340,20 +397,61 @@ ggplot(data = ExperienceRisk %>%
            position="dodge")+
   labs(x = "Gamble Number", 
        fill = "Gender",
-       title = "Gendeder Differences After Experience")
+       title = "Gendeder Differences After Experience (Gamble 2)")
 ```
 
 ```{r,echo=FALSE}
 ggplot(data = ExperienceRisk %>% 
-         filter(Gender=="M"|Gender=="F") %>% 
-         select(Gender,Gamble.2) ) + 
+         filter(Gender=="M"|Gender=="F") ) + 
   geom_density(aes(x = Gamble.2,fill = Gender),
            alpha=.5)+
   labs(x = "Gamble Number", 
        fill = "Gender",
-       title = "Gendeder Differences After Experience")
+       title = "Gender Differences After Experience (Gamble 2)")
 ```
 
+### Differences in learning
+
+Even when they start with different choices, the effect of the experience is not different between genders.
+The differences in risk attitudes seems consistent with the literature, and the experience with the task performed in this experiment does not change this gap.
+
+```{r,echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="M"|Gender=="F") ) + 
+  geom_bar(aes(x = simple_diff,fill = Gender),
+           position = "dodge")+
+  labs(x = "G2-G1", 
+       fill = "Gender",
+       title = "Gender Differences in Gamble Choice")
+
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="M"|Gender=="F") ) + 
+  geom_density(aes(x = simple_diff,fill = Gender),
+           alpha=.5)+
+  labs(x = "G2-G1", 
+       fill = "Gender",
+       title = "Gender Differences in Gamble Choice")
+
+```
+
+```{r,echo=FALSE}
+
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="M"|Gender=="F") ) + 
+  geom_bar(aes(x = diff_Exp_Payoffs,fill = Gender),
+           position = "dodge")+
+  labs(x = "EP2-EP1", 
+       fill = "Gender",
+       title = "Gender Differences in Expected Payoff Between Gambles Chosen")
+
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="M"|Gender=="F") ) + 
+  geom_density(aes(x = diff_Exp_Payoffs,fill = Gender),
+           alpha=.5)+
+  labs(x = "EP2-EP1", 
+       fill = "Gender",
+       title = "Gender Differences in Expected Payoff Between Gambles Chosen")
+```
 
 ## Regression
 
@@ -366,6 +464,7 @@ m2 <- lm(simple_diff ~
            sum_correct_payoffs+
            numEven_all+
            explore+
+           mean_payoff_periods +
            Session,
          data = ExperienceRisk %>%
            filter(Gender=="F"|Gender=="M") )
