@@ -22,14 +22,14 @@ p_load(stargazer)
 This dataset contains the result from 6 experimental sessions. 
 
 ```{r, echo=FALSE}
-load('../data/ExperienceRisk_Sessions.RData')
-#head(ExperienceRisk_Sessions)
+load('../data/ExperienceRisk.RData')
+#head(ExperienceRisk)
 ```
 
 
 ```{r, include=FALSE}
 Averges_per_Session <- 
-  ExperienceRisk_Sessions %>% 
+  ExperienceRisk %>% 
   group_by(Session) %>% 
   summarise(N=n(), 
             Age = mean(Age),
@@ -37,7 +37,7 @@ Averges_per_Session <-
             G_1 = mean(Gamble.1),
             G_2 = mean(Gamble.2),
             CRT = mean(CR.Payoff),
-            Correct = mean(sum_correct_payoffs_second),
+            Correct = mean(sum_correct_payoffs),
             G_Change = mean(simple_diff),
             n_Even = mean(numEven_all),
             Explore = mean(explore)
@@ -71,17 +71,43 @@ The 24 periods of realizations didn't affected the final payoff, but one of them
 ### G2 - G1
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          select(Gamble.1,Gamble.2) %>% 
-         gather("Gamble_Order","Gamble") ) + 
-  geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
+         gather("Order","Gamble") ) + 
+  geom_bar(aes(x = factor(Gamble),
+               fill = Order),
+           position="dodge")+
   labs(x = "Gamble Number", fill = "Gamble Order")
+
 ```
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Order","Gamble") %>% 
+         mutate(Order = recode_factor(Order,
+                                 Gamble.1 = "Initial", 
+                                 Gamble.2 = "Final")),
+       aes(x = Gamble,
+           group = Order,
+           fill= Order,
+           col= Order )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Cumulative Row Choice",
+       col="Gamble Order")+
+  ylab("Cumulative Proportion")+
+  xlab("Row chosen")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))
+
+```
+
 
 The direction of the change is driven mostly by people choosing gamble 3 at the beginning and moving upwards.
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_bar(aes(x = factor(Gamble.1),fill = factor(sign_gamble)),position="dodge")+
   labs(x = "Gamble Number",fill= "Directional \nChange of \nGamble")
 ```
@@ -89,7 +115,7 @@ ggplot(data = ExperienceRisk_Sessions) +
 When analyzing the magnitude of the direction, it is clear that the main effect is driven by people moving from gamble 3 to gamble 4 (11 participants), and from gamble 4 to gamble 5 (8 participants).
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_bar(aes(x = factor(Gamble.1),
                fill = factor(simple_diff)),
            position="dodge",
@@ -100,11 +126,11 @@ ggplot(data = ExperienceRisk_Sessions) +
 
 The Wilcox test shows that the difference is significant at 5% when analyzing the hypothesis that Gamble 2 is greater. 
 ```{r}
-wilcox.test(x = ExperienceRisk_Sessions$simple_diff,alternative = "greater")
+wilcox.test(x = ExperienceRisk$simple_diff,alternative = "greater")
 ```
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_bar(aes(x = factor(simple_diff),
                fill = factor(Gamble.1)),
            position="dodge",
@@ -116,27 +142,51 @@ ggplot(data = ExperienceRisk_Sessions) +
 ### EP1 - EP2
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          select(Exp_Payoffs_G1,Exp_Payoffs_G2) %>% 
          gather("Gamble_EP","Gamble") ) + 
   geom_bar(aes(x = factor(Gamble),fill = Gamble_EP),position="dodge")+
   labs(x = "Gamble's Expected Payoff", fill = "Gamble \nExpected \nPayoff")
 ```
 
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         select(Exp_Payoffs_G1,Exp_Payoffs_G2) %>% 
+         gather("Order","Gamble") %>% 
+         mutate(Order = recode_factor(Order,
+                                 Exp_Payoffs_G1 = "Initial", 
+                                 Exp_Payoffs_G2 = "Final")),
+       aes(x = Gamble,
+           group = Order,
+           fill= Order,
+           col= Order )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Cumulative Chosen Expected Value",
+       col="Gamble Order")+
+  ylab("Cumulative Proportion")+
+  xlab("Gamble's Expected Payoff")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))
+
+```
+
+
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_bar(aes(x = factor(Exp_Payoffs_G1),fill = factor(sign_exp_payoff)),position="dodge")+
   labs(x = "Gamble 1's Expected Payoff",fill= "Directional \nChange of \nGamble")
 ```
 
 The Wilcox test shows that the difference is significant at 10% when analyzing the hypothesis that Gamble 2 is greater. 
 ```{r}
-wilcox.test(x = ExperienceRisk_Sessions$diff_Exp_Payoffs,alternative = "greater")
+wilcox.test(x = ExperienceRisk$diff_Exp_Payoffs,alternative = "greater")
 ```
 
 
 ```{r}
-ExperienceRisk_Sessions %>% tabyl(Gamble.1,Gamble.2)
+ExperienceRisk %>% tabyl(Gamble.1,Gamble.2)
 ```
 
 
@@ -144,7 +194,7 @@ ExperienceRisk_Sessions %>% tabyl(Gamble.1,Gamble.2)
 
 ### Gamble 1 - Gamble 2
 ```{r}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_point(aes(x=numEven_all,y=simple_diff))
 ```
 
@@ -152,7 +202,7 @@ ggplot(data = ExperienceRisk_Sessions) +
 ```{r}
 m1 <- lm(simple_diff ~ 
            numEven_all,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 summary(m1)
 ```
 
@@ -161,14 +211,14 @@ There is no significant effect of the overall number of events on the difference
 ```{r}
 m1 <- lm(simple_diff ~ 
            numEven_all,
-         data = ExperienceRisk_Sessions %>% filter(sum_correct_payoffs>18) )
+         data = ExperienceRisk %>% filter(sum_correct_payoffs>18) )
 summary(m1)
 ```
 
 
 ### Excpected Payoff 1 - Expected Payoff 2
 ```{r, echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_point(aes(y=diff_Exp_Payoffs,x=numEven_all))
 ```
 
@@ -176,7 +226,7 @@ ggplot(data = ExperienceRisk_Sessions) +
 ```{r,echo=FALSE}
 m1 <- lm(diff_Exp_Payoffs ~ 
            numEven_all,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 summary(m1)
 ```
 
@@ -186,7 +236,7 @@ There is no significant effect of the overall number of events on the difference
 
 
 ```{r}
-ExperienceRisk_Sessions %>% 
+ExperienceRisk %>% 
   mutate(G1 = factor(Gamble.1),
          CRT = factor(CR.Payoff)) %>% 
   tabyl(G1,CRT)
@@ -194,7 +244,7 @@ ExperienceRisk_Sessions %>%
 
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(CR.Payoff==0) %>% 
          select(Gamble.1,Gamble.2) %>% 
          gather("Gamble_Order","Gamble") ) + 
@@ -203,7 +253,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ```
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(CR.Payoff>=0) %>% 
          select(Gamble.1,Gamble.2) %>% 
          gather("Gamble_Order","Gamble") ) + 
@@ -216,14 +266,14 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ### G2 - G1
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_bar(aes(x = factor(Gamble.1),fill = factor(CR.Payoff)),position="dodge")+
   labs(x = "Gamble 1",fill= "CRT \nScore")
 ```
 
 
 ```{r, echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_boxplot(aes(y=simple_diff,x=factor(CR.Payoff)))
 ```
 
@@ -231,7 +281,7 @@ ggplot(data = ExperienceRisk_Sessions) +
 ```{r,echo=FALSE}
 m1 <- lm(simple_diff ~ 
            CR.Payoff>0,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 summary(m1)
 ```
 
@@ -241,21 +291,21 @@ This effect in not longer significant if the regression include all the levels o
 ```{r,echo=FALSE}
 m1 <- lm(simple_diff ~ 
            CR.Payoff,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 summary(m1)
 ```
 
 ### EP2 - EP1
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_bar(aes(x = factor(Exp_Payoffs_G1),fill = factor(CR.Payoff)),position="dodge")+
   labs(x = "Gamble 1' Expected Payoff",fill= "CRT \nScore")
 ```
 
 
 ```{r, echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_boxplot(aes(y=diff_Exp_Payoffs,x=factor(CR.Payoff)))
 ```
 
@@ -263,7 +313,7 @@ ggplot(data = ExperienceRisk_Sessions) +
 ```{r,echo=FALSE}
 m1 <- lm(diff_Exp_Payoffs ~ 
            CR.Payoff>0,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 summary(m1)
 ```
 
@@ -273,17 +323,40 @@ If people got at least one point, they will increase by one the number of the ga
 ## Effects of history
 
 ```{r}
-ggplot(data = ExperienceRisk_Sessions) + 
+ggplot(data = ExperienceRisk) + 
   geom_point(aes(x=mean_payoff_periods,y=simple_diff))
 ```
 
 ```{r}
 m1 <- lm(diff_Exp_Payoffs ~ 
            mean_payoff_periods,
-         data = ExperienceRisk_Sessions %>% filter(CR.Payoff!=0) )
+         data = ExperienceRisk %>% filter(CR.Payoff!=0) )
 summary(m1)
 ```
 
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         mutate(less_equal_than_12_even = 
+                  recode_factor(
+                    as.factor(ExperienceRisk$less_than_12_even),
+                                 "TRUE" = "< Half Favorable", 
+                                 "FALSE" = "> Half Favorable")),
+       aes(x = simple_diff,
+           #group = less_equal_than_12_even,
+           #fill= less_equal_than_12_even,
+           col= less_equal_than_12_even )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Cumulative Row Changes by Practice Roll Outcomes",
+       col="Favorable Practice Rolls")+
+  ylab("Cumulative Proportion")+
+  xlab("Chosen Row Difference")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))+
+  scale_color_manual(values = c("red","blue"))
+
+```
 
 ## Gender differences
 
@@ -291,17 +364,185 @@ Male and Female participants moved in the expected direction; both moved towards
 
 The distribution of gamble choices among men changes towards gamble 6; risk loving. At the beginning, before the experience the distribution was more or less homogeneous between gambles 3 to 6. 
 
+```{r}
+g1g2_fem <- ExperienceRisk %>% 
+         select(Gamble.1, Gamble.2,female) %>% 
+         gather(key = "Order",value = "Gamble", 
+                -female) %>% 
+         mutate(
+           Order = recode_factor(Order,
+                                 Gamble.1 = "Initial", 
+                                 Gamble.2 = "Final"),
+           Gender = recode_factor(factor(female),
+                                 'TRUE' = "Female", 
+                                 'FALSE' = "Other"))
+
+e1e2_fem <- ExperienceRisk %>% 
+         select(Exp_Payoffs_G1, Exp_Payoffs_G2,female) %>% 
+         gather(key = "Order",value = "Expected_P", 
+                -female) %>% 
+         mutate(
+           Order = recode_factor(Order,
+                                 Exp_Payoffs_G1 = "Initial", 
+                                 Exp_Payoffs_G2 = "Final"),
+           Gender = recode_factor(factor(female),
+                                 'TRUE' = "Female", 
+                                 'FALSE' = "Other"))
+
+ggplot(g1g2_fem,
+       aes(x = Gamble,
+           group = interaction(Order, Gender),
+           size=Order, 
+           col = Gender )
+       ) +
+  stat_ecdf(geom = "step") +
+  labs(title = "cumulative Row Chosen y Gender and Order")+
+  ylab("cumulative Proportion")+
+  xlab("Row Chosen")+
+  scale_size_manual(values = c(.6,1.2))+
+  theme(text = element_text(family = "serif"))+
+  theme_light()
+
+# cumulative by order and gender of chosen row
+ggplot(g1g2_fem,
+       aes(x = Gamble,
+           group = paste(Order,Gender),
+           col = paste(Order,Gender)
+           )
+       ) +
+  stat_ecdf(geom = "step",
+           size = 1.2) +
+  labs(title = "cumulative Row Chosen y Gender and Order",
+       col = "Interaction \n Gamble Order and Gender")+
+  ylab("cumulative Proportion")+
+  xlab("Row Chosen")+
+  theme(text = element_text(family = "serif"))+
+  theme_light()
+
+# cumulative by order and gender of expected payoff
+ggplot(e1e2_fem,
+       aes(x = Expected_P,
+           group = paste(Order,Gender),
+           col = paste(Order,Gender)
+           )
+       ) +
+  stat_ecdf(geom = "step",
+           size = 1.2) +
+  labs(title = "cumulative Expected Payoff by Gender and Order",
+       col = "Interaction \n Gamble Order and Gender")+
+  ylab("cumulative Proportion")+
+  xlab("Gamble's Expected Payoff")+
+  theme(text = element_text(family = "serif"))+
+  theme_light()
+
+```
+
+### G2-G1
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="F") %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Order","Gamble") %>% 
+         mutate(Order = recode_factor(Order,
+                                 Gamble.1 = "Initial", 
+                                 Gamble.2 = "Final")),
+       aes(x = Gamble,
+           col= Order )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Female's Cumulative Row Choice",
+       col="Gamble Order")+
+  ylab("Cumulative Proportion")+
+  xlab("Row chosen")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))
+
+```
+
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="M") %>% 
+         select(Gamble.1,Gamble.2) %>% 
+         gather("Order","Gamble") %>% 
+         mutate(Order = recode_factor(Order,
+                                 Gamble.1 = "Initial", 
+                                 Gamble.2 = "Final")),
+       aes(x = Gamble,
+           group = Order,
+           fill= Order,
+           col= Order )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Male's Cumulative Row Choice",
+       col="Gamble Order")+
+  ylab("Cumulative Proportion")+
+  xlab("Row chosen")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))
+
+```
+
+### EP2-EP1
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="F") %>% 
+         select(Exp_Payoffs_G1,Exp_Payoffs_G2) %>% 
+         gather("Order","Gamble") %>% 
+         mutate(Order = recode_factor(Order,
+                                 Exp_Payoffs_G1 = "Initial", 
+                                 Exp_Payoffs_G2 = "Final")),
+       aes(x = Gamble,
+           group = Order,
+           fill= Order,
+           col= Order )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Female Cumulative Chosen Expected Value",
+       col="Gamble Order")+
+  ylab("Cumulative Proportion")+
+  xlab("Gamble's Expected Payoff")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))
+
+```
+
+
+```{r, echo=FALSE}
+ggplot(data = ExperienceRisk %>% 
+         filter(Gender=="M") %>% 
+         select(Exp_Payoffs_G1,Exp_Payoffs_G2) %>% 
+         gather("Order","Gamble") %>% 
+         mutate(Order = recode_factor(Order,
+                                 Exp_Payoffs_G1 = "Initial", 
+                                 Exp_Payoffs_G2 = "Final")),
+       aes(x = Gamble,
+           group = Order,
+           fill= Order,
+           col= Order )) + 
+  stat_ecdf(geom = "step",
+           size = 1.2)+
+  labs(title = "Male Cumulative Chosen Expected Value",
+       col="Gamble Order")+
+  ylab("Cumulative Proportion")+
+  xlab("Gamble's Expected Payoff")+
+  theme_light()+
+  theme(text = element_text(family = "serif"))
+
+```
+
+
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(Gender=="M") %>% 
          select(Gamble.1,Gamble.2) %>% 
          gather("Gamble_Order","Gamble") ) + 
   geom_bar(aes(x = factor(Gamble),fill = Gamble_Order),position="dodge")+
-  labs(x = "Gamble Number", fill = "Gamble Order",title = "Male")
+    labs(x = "Gamble Number", fill = "Gamble Order",title = "Male")
 ```
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(Gender=="F") %>% 
          select(Gamble.1,Gamble.2) %>% 
          gather("Gamble_Order","Gamble") ) + 
@@ -311,7 +552,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(Gender=="M"|Gender=="F") %>% 
          select(Gender,Gamble.1) ) + 
   geom_bar(aes(x = factor(Gamble.1),fill = Gender), 
@@ -322,7 +563,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ```
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(Gender=="M"|Gender=="F") %>% 
          select(Gender,Gamble.1) ) + 
   geom_density(aes(x = Gamble.1,fill = Gender),
@@ -333,7 +574,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ```
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(Gender=="M"|Gender=="F") %>% 
          select(Gender,Gamble.2) ) + 
   geom_bar(aes(x = factor(Gamble.2),fill = Gender),
@@ -344,7 +585,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ```
 
 ```{r,echo=FALSE}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(Gender=="M"|Gender=="F") %>% 
          select(Gender,Gamble.2) ) + 
   geom_density(aes(x = Gamble.2,fill = Gender),
@@ -359,26 +600,101 @@ ggplot(data = ExperienceRisk_Sessions %>%
 
 ### G2- G1
 ```{r,echo=FALSE,results='asis'}
-m2 <- lm(simple_diff ~ 
-           Gamble.1 +
-           Gender +
+m_complete <- lm(simple_diff ~
+           female +
+           CR.Payoff +
+           #sum_correct_payoffs+
+           numEven_all+
+           explore+
+           #factor(Session) +
+           Gamble.1 ,
+         data = ExperienceRisk  )
+
+m_simple <- lm(simple_diff ~
+           female +
+           CR.Payoff+
+           Gamble.1,
+           #sum_correct_payoffs,
+         data = ExperienceRisk%>%
+           filter(Gender=="F"|Gender=="M") )
+
+stargazer(m_complete, 
+          m_simple, 
+          header = F,
+          covariate.labels =
+            c("Female","CRT",
+              "Num. Even", "Explore",
+              "Gamble 1"),
+          dep.var.labels = c("G2-G1")
+          #,type = "text"
+          )
+```
+
+
+```{r,echo=FALSE,results='asis'}
+m_complete <- lm(simple_diff ~
+           female +
            CR.Payoff +
            sum_correct_payoffs+
            numEven_all+
            explore+
-           Session,
-         data = ExperienceRisk_Sessions %>%
-           filter(Gender=="F"|Gender=="M") )
+           #factor(Session) +
+           Gamble.1 ,
+         data = ExperienceRisk  )
 
-m3 <- lm(simple_diff ~ 
-           Gamble.1 +
-           Gender +
-           CR.Payoff +
+m_simple <- lm(simple_diff ~
+           female +
+           CR.Payoff+
+           sum_correct_payoffs+
+           Gamble.1,
            sum_correct_payoffs,
-         data = ExperienceRisk_Sessions%>%
+         data = ExperienceRisk%>%
            filter(Gender=="F"|Gender=="M") )
 
-stargazer(m2, m3,header = F)
+stargazer(m_complete, 
+          m_simple, 
+          header = F,
+          # covariate.labels =
+          #   c("Female","CRT",
+          #     "Num. Even", "Explore",
+          #     "Gamble 1"),
+          dep.var.labels = c("G2-G1")
+          #,type = "text"
+          )
+```
+
+
+
+
+```{r,echo=FALSE,results='asis'}
+m_complete <- lm(simple_diff ~
+           female +
+           CR.Payoff +
+           sum_correct_payoffs+
+           numEven_all+
+           explore+
+           factor(Session) +
+           Gamble.1 ,
+         data = ExperienceRisk  )
+
+m_simple <- lm(simple_diff ~
+           female +
+           CR.Payoff+
+           Gamble.1,
+           #sum_correct_payoffs,
+         data = ExperienceRisk%>%
+           filter(Gender=="F"|Gender=="M") )
+
+stargazer(m_complete, 
+          m_simple, 
+          header = F,
+          # covariate.labels =
+          #   c("Female","CRT",
+          #     "Num. Even", "Explore",
+          #     "Gamble 1"),
+          dep.var.labels = c("G2-G1")
+          ,type = "text"
+          )
 ```
 
 
@@ -386,10 +702,10 @@ stargazer(m2, m3,header = F)
 m2 <- lm(Gamble.2 ~ 
            middle +
            Gender*CR.Payoff*even,
-         data = ExperienceRisk_Sessions %>% 
+         data = ExperienceRisk %>% 
            filter(Gender %in% c("F","M")) %>% 
            mutate(CR.Payoff= factor(CR.Payoff),
-                  even = factor(less_than_12_even*(-1)+1))
+                  even = factor(less_equal_than_12_even*(-1)+1))
            )
 stargazer(m2,header = F)
 ```
@@ -405,12 +721,12 @@ m2 <- lm(diff_Exp_Payoffs ~
            numEven_all+
            explore+
            Session,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 
 m3 <- lm(diff_Exp_Payoffs ~ 
            Gamble.1 +
            sum_correct_payoffs,
-         data = ExperienceRisk_Sessions)
+         data = ExperienceRisk)
 
 stargazer(m2, m3, header = F)
 ```
@@ -419,7 +735,7 @@ stargazer(m2, m3, header = F)
 # CRT = 0
 
 ```{r}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(CR.Payoff!=0) %>% 
          select(Gamble.1,Gamble.2) %>% 
          gather("Gamble_Order","Gamble") ) + 
@@ -429,7 +745,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 
 
 ```{r}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          select(Gamble.1,CR.Payoff) ) + 
   geom_bar(aes(x = factor(Gamble.1),
                fill = factor(CR.Payoff)),
@@ -441,7 +757,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 
 
 ```{r}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          select(Gamble.2,CR.Payoff) ) + 
   geom_bar(aes(x = factor(Gamble.2),
                fill = factor(CR.Payoff)),
@@ -452,7 +768,7 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ```
 
 ```{r}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          select(simple_diff,CR.Payoff) ) + 
   geom_density(aes(x = simple_diff,
                fill = factor(CR.Payoff==0)),
@@ -466,15 +782,15 @@ ggplot(data = ExperienceRisk_Sessions %>%
 ```{r,echo=FALSE, results='asis'}
 m2 <- lm(diff_Exp_Payoffs ~ 
            Gamble.1 +
-           less_than_12_even,
-         data = ExperienceRisk_Sessions %>% filter(CR.Payoff==0 & Gender=="F"))
+           less_equal_than_12_even,
+         data = ExperienceRisk %>% filter(CR.Payoff==0 & Gender=="F"))
 stargazer(m2, header = F, title="Expected Payoff among Females with CRT=0")
 ```
 
 ## effect of history
 
 ```{r}
-ggplot(data = ExperienceRisk_Sessions %>% 
+ggplot(data = ExperienceRisk %>% 
          filter(CR.Payoff!=0) ) + 
   geom_point(aes(x=mean_payoff_periods,y=simple_diff))
 ```

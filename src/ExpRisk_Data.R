@@ -10,7 +10,7 @@ p_load(matrixStats)
 
 # Data set ----
 
-## data from the experiment
+## data from the experiment ----
 ExperienceRisk_Sessions <- read.csv("data/ExperienceRisk_ID.csv", fileEncoding="UTF-8-BOM")
 ExperienceRisk_Sessions <- ExperienceRisk_Sessions %>% 
   # create standard emails for matching
@@ -26,25 +26,23 @@ ExperienceRisk_Sessions <- ExperienceRisk_Sessions %>%
 Payoffs <- read.csv("data/Payoffs.csv", fileEncoding="UTF-8-BOM")
 Payoffs <- Payoffs %>% mutate(Exp_payoff = (A+B)/2)
 
-# Merging ----
-
-## data from follow-up survey
-EBEL_.follow.up <- read.csv("data/EBEL_ follow-up.csv")
+## data from follow-up survey ----
+EBEL_.follow.up <- read.csv("data/EBEL_follow-up.csv")
 EBEL_.follow.up <- EBEL_.follow.up %>% 
   # create standard emails for matching
   mutate(Email = str_to_lower(Email)) %>% 
   mutate(Email =  str_remove(Email, "umail."))%>% 
-  mutate(Email = str_replace(Email,"gmail.com","ucsb.edu"))
-
-ExperienceRisk <- left_join(ExperienceRisk_Sessions,EBEL_.follow.up,by = "Email")
-ExperienceRisk$Email
+  mutate(Email = str_replace(Email,"gmail.com","ucsb.edu")) %>% 
+  filter(Email != "")
 
 # Emails of people in the survey, but not matched in the experiment
-EBEL_.follow.up %>% filter(!(EBEL_.follow.up$Email %in% ExperienceRisk_Sessions$Email))%>% 
+EBEL_.follow.up %>% 
+  filter(!(EBEL_.follow.up$Email %in% ExperienceRisk_Sessions$Email))%>% 
   select(Email)
 # Emails of people in the experiment, not matched with the survey 
-ExperienceRisk_Sessions %>% filter(!(ExperienceRisk_Sessions$Email %in% EBEL_.follow.up$Email)) %>% 
-  select(Email) %>% mutate(Email =  str_remove(Email, "umail."))
+ExperienceRisk_Sessions %>% 
+  filter(!(ExperienceRisk_Sessions$Email %in% EBEL_.follow.up$Email)) %>% 
+  select(Email)
 
 # number of mistakes ----
 ## function
@@ -105,7 +103,8 @@ ExperienceRisk_Sessions %>%
     # consider selecting always the same choice in the free choice subsection as no exploration
     explore = Free_choice_var!=0,
     male = Gender=="M",
-    less_than_12_even = numEven_all<12,
+    female = Gender=="F",
+    less_equal_than_12_even = numEven_all<=12,
     mean_payoff_periods_first = sum_payoffs_first/12,
     mean_payoff_periods_second = sum_payoffs_second/12,
     mean_payoff_periods = (sum_payoffs_first + sum_payoffs_second)/24,
@@ -115,10 +114,17 @@ ExperienceRisk_Sessions %>%
 sum(ExperienceRisk_Sessions$explore)
 # 83 people out of 99 explore
 
+## Merging ----
+ExperienceRisk <- left_join(ExperienceRisk_Sessions,
+                            EBEL_.follow.up,
+                            by = "Email")
+ExperienceRisk$Email
+
+
 # #To check data 
 # View(ExperienceRisk_Sessions %>% select(-starts_with(c("F","R","E","P"))))
 
 # export data 
-save(ExperienceRisk,file = 'data/ExperienceRisk_Sessions.RData')
-write.csv(x = ExperienceRisk,file = "data/ExperienceRisk_Sessions.csv")
+save(ExperienceRisk,file = 'data/ExperienceRisk.RData')
+write.csv(x = ExperienceRisk,file = "data/ExperienceRisk.csv")
 
